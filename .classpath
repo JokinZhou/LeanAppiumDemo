@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="libs/dom4j-1.6.1.jar" sourcepath="D:/XML_DOM4J/dom4j-1.6.1.zip"/>
+	<classpathentry kind="lib" path="libs/java-client-3.2.0.jar" sourcepath="D:/Appium_Code_Jar/java-client-3.2.0-sources.jar"/>
+	<classpathentry kind="lib" path="libs/jxl-2.6.12.jar"/>
+	<classpathentry kind="lib" path="libs/selenium-java-2.48.2.jar" sourcepath="D:/Appium_Code_Jar/selenium-java-2.48.2-srcs.jar"/>
+	<classpathentry kind="lib" path="libs/selenium-server-standalone-2.48.2.jar" sourcepath="E:/Appium/Appium_Code_Jar/selenium-java-2.48.2-srcs.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

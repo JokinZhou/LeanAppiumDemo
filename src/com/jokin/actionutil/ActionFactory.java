@@ -10,6 +10,9 @@ import org.openqa.selenium.WebElement;
 
 /**
  * @author jokin
+ * 封装的是读取到文本数据（excel）后，对读取到的关键字做什么处理的类
+ * input、click、clearText、longPress、swipeToLift、swipeToRight、swipeToTop、swipeToDown
+ * clickListboxItem、switchNativeOrWeb
  *
  */
 public class ActionFactory {
@@ -38,9 +41,11 @@ public class ActionFactory {
 			AppiumActionUtil.swipeToUp(driver, 1000);
 		}else if(action!=null &&action.equals("swipeToDown")){
 			AppiumActionUtil.swipeToDown(driver, 1000);
+		}else if(action.equals("switchNativeOrWeb")){
+		//如果执行了切换appViewType操作，当某个值可以是actionvalue的值为native时就切换到NATIVE_APP模式，如果值是webView则切换到webView模式
+			//这个判断放在switchNativeOrWeb方法里面处理
+				AppiumActionUtil.switchNativeOrWeb(driver, actionvalue);
 		}/*else if(action.equals("swipeToTop")){
-			
-		}else if(action.equals("swipeToTop")){
 			
 		}*/
 	}

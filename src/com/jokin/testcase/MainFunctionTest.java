@@ -40,7 +40,7 @@ import com.jokin.data.ResultOfTest;
  *
  */
 @RunWith(BlockJUnit4ClassRunner.class)
-public class MainTest extends TestCase {
+public class MainFunctionTest extends TestCase {
 
   private AppiumDriver driver;
 

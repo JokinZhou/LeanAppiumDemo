@@ -18,7 +18,7 @@ import com.jokin.waitFouction.ExpectedCondition;
 
 /**
  * @author jokin
- * 封装一些appium常用的操作方法，如：定位组件、上下左右滑动、长按、输入，清空输入框，下拉列表框选择选项等
+ * 封装一些appium常用的操作方法，如：定位组件、上下左右滑动、长按、输入，清空输入框，下拉列表框选择选项,返回（android）等
  *  摇一摇、倾斜 方法待实现
  *  输入使用 webdriver的sendKeys 方法实现
  * 长按 调用appium的api中TouchAction类中的LongPress方法；该方法有多种构造；可以用坐标、元素组件等
@@ -125,23 +125,32 @@ public class AppiumActionUtil {
 		driver.swipe(width/4, height/2, width*3/4, height/2, duration);
 	}
 	/**
-	 * 点击下拉框选项
+	 * 点击下拉框选项(由于下拉列表这样的选项，driver能find但是点击不到（因为看不见隐藏了）所以要用特殊方法点击)
+	 * （待调试）
 	 * @param driver
-	 * @param toElement
+	 * @param locationStyle 定位方式
+	 * @param locationValue  定位的值（待选选项的值）
 	 */
-	public static void clickListboxItem(AndroidDriver driver,WebElement toElement){
+	public static void clickListboxItem(AndroidDriver driver,String locationStyle, final String locationValue){
+		//由于下拉列表这样的选项，driver能find但是点击不到（因为看不见隐藏了）
+		WebElement toElement = findViewTool(driver, locationStyle, locationValue);
 		//方法一
-		Actions act = new Actions(driver);
-		//滑动到对应的元素上面;;;隐藏元素无法直接定位
-		act.moveToElement(toElement).perform();
-		//点击对应的元素;;隐藏元素无法直接定位
-		driver.findElement(By.linkText("下拉列表选项1"));
-		//方法二
+		Actions action = new Actions(driver);
+		//滑动到对应的元素上面;;;隐藏元素无法直接定位 ;  移动到元素上并点击
+		action.moveToElement(toElement).click().build().perform();
+		//方法二  selenium是抓门用于web页面的下拉列表框的
 		Select select = new Select(toElement);
-		select.deselectByValue("待选的下拉选项");
+		select.selectByValue(locationValue);
+		/*//取消选择XXXX
+		select.deselectByValue("待选的下拉选项");*/
 	}
-	
-	public static void switchNativeOrWeb(AndroidDriver driver,String targetType) throws InterruptedException{
+	/**
+	 * app进入到webView页面是转换模式封装（待调试）
+	 * @param driver
+	 * @param appViewType
+	 * @throws InterruptedException
+	 */
+	public static void switchNativeOrWeb(AndroidDriver<?> driver,String appViewType) {
 		//一个app可以同时又多个context；比如application对象、Activity对象、service对象每创建一个都有自己的context；
 		//获取返回当前所有的conext，
 		Set<String> contextNames = driver.getContextHandles();
@@ -149,10 +158,15 @@ public class AppiumActionUtil {
             System.out.println(contextName); // 用于返回被测app是NATIVE_APP还是WEBVIEW，如果两者都有就是混合型App
         }
 
-        Thread.sleep(5000);// 等它一会
+        try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}// 等它一会
 
-        if(targetType != null && targetType.equals("webview") ){
-        	driver.context("WEBVIEW");// 让appium切换到webview模式以便查找web元素
+        if(appViewType != null && appViewType.equals("webview") ){
+        	driver.context("WEBVIEW_01");// 让appium切换到webview模式以便查找web元素
         }else{
         	driver.context("NATIVE_APP");
         }
