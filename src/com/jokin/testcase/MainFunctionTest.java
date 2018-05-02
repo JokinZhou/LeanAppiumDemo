@@ -1,4 +1,5 @@
 /**
+ * junit çš„æµ‹è¯•é¡¹ç›®
  * 
  */
 package com.jokin.testcase;
@@ -16,6 +17,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import junit.framework.TestCase;
+import jxl.read.biff.BiffException;
 
 import org.apache.commons.collections.functors.ExceptionFactory;
 import org.junit.After;
@@ -46,7 +48,7 @@ public class MainFunctionTest extends TestCase {
 
   @Before
   public void start() throws MalformedURLException {
-	  //µ÷ÓÃ·â×°ºÃµÄInitAppiumÈ¥³õÊ¼appiumµÄ²ÎÊý
+	  //ï¿½ï¿½ï¿½Ã·ï¿½×°ï¿½Ãµï¿½InitAppiumÈ¥ï¿½ï¿½Ê¼appiumï¿½Ä²ï¿½ï¿½ï¿½
 	  try {
 		driver = InitAppium.initIntallAPK("D:\\testAPP.APK");
 	} catch (Exception e) {
@@ -57,44 +59,44 @@ public class MainFunctionTest extends TestCase {
   }
 
   @Test
-  public void testFunction() {
+  public void testFunction() throws BiffException, IOException {
 	  
 		File dataExcel = new File("g:\\data.xls");
-		//µ÷ÓÃReadAndWriteExcelByJXL·½·¨½øÐÐexcelµÄ½âÎö
+		//ï¿½ï¿½ï¿½ï¿½ReadAndWriteExcelByJXLï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½excelï¿½Ä½ï¿½ï¿½ï¿½
 		List<ActionTestData> actionTestData = ReadAndWriteExcelByJXL.getData(dataExcel);
 		List<ResultOfTest> resultList  = new ArrayList<ResultOfTest>();
 		for(int i=0;i<actionTestData.size();i++){
-			//Ö´ÐÐÏà¹Ø
+			//Ö´ï¿½ï¿½ï¿½ï¿½ï¿½
 			System.out.println("caseNO:"+ actionTestData.get(i).getCaseNo());
 			System.out.println("action:"+actionTestData.get(i).getAction());
 			System.out.println("LocationStyle:"+actionTestData.get(i).getLocationStyle());
 			System.out.println("LocationValue:"+actionTestData.get(i).getLocationValue());
 			System.out.println("ActionValue:"+actionTestData.get(i).getActionValue());
-			//½á¹ûÏà¹Ø
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			System.out.println("ExpectationStyle:"+actionTestData.get(i).getExpectationStyle());
 			System.out.println("expectationLocationStyle:"+actionTestData.get(i).getExpectationLocationStyle());
 			System.out.println("expectationLocationValue:"+actionTestData.get(i).getExpectationLocationValue());
 			System.out.println("Expectation:"+actionTestData.get(i).getExpectation());
 			System.out.println("....................");
-			//Ê¹ÓÃ¶ÁÈ¡µ½µÄexcel±í¸ñ²ÎÊý£¬È¥µ÷ÓÃ¹Ø¼ü×Ö¿ò¼Ü½øÐÐ²âÊÔ£» ½«¶ÁÈ¡µ½µÄÖµ£¬Ö±½Ó×÷Îª²ÎÊý¸øActionFactoryÀïÃæexecuteAction È¥Ö´ÐÐÓÃÀý
-			//Ö´ÐÐ¶¯×÷
+			//Ê¹ï¿½Ã¶ï¿½È¡ï¿½ï¿½ï¿½ï¿½excelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½Ã¹Ø¼ï¿½ï¿½Ö¿ï¿½Ü½ï¿½ï¿½Ð²ï¿½ï¿½Ô£ï¿½ ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ActionFactoryï¿½ï¿½ï¿½ï¿½executeAction È¥Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			//Ö´ï¿½Ð¶ï¿½ï¿½ï¿½
 			if(driver!=null){
 				ActionFactory.executeAction((AndroidDriver) driver, actionTestData.get(i).getAction(), actionTestData.get(i).getLocationStyle()
 						,actionTestData.get(i).getLocationValue(), actionTestData.get(i).getActionValue());
 			}else{
-				System.out.println("³õÊ¼»¯appniumÊ§°Ü£¬driver³õÊ¼»¯Ê§°Ü");
+				System.out.println("ï¿½ï¿½Ê¼ï¿½ï¿½appniumÊ§ï¿½Ü£ï¿½driverï¿½ï¿½Ê¼ï¿½ï¿½Ê§ï¿½ï¿½");
 			}
-			//Êµ¼Ê½á¹ûÓëÔ¤ÆÚ½á¹û½øÐÐ¶Ô±È
+			//Êµï¿½Ê½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ô±ï¿½
 			ResultOfTest resultOfTest = ExceptioneFactory.equalException((AndroidDriver) driver, actionTestData.get(i));
 			resultList.add(resultOfTest);
 		}
 		
 		try {
-			ReadAndWriteExcelByJXL.writeResult("²âÊÔ½á¹û", resultList);
+			ReadAndWriteExcelByJXL.writeResult("ï¿½ï¿½ï¿½Ô½ï¿½ï¿½", resultList);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("²âÊÔ½á¹ûÐ´Èëµ½excel±í¸ñÊ±³öÏÖÒì³£");
+			System.out.println("ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Ð´ï¿½ëµ½excelï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ì³£");
 		}
   }
 

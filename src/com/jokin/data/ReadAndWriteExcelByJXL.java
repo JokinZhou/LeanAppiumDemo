@@ -22,7 +22,7 @@ import jxl.write.WriteException;
 
 /**
  * @author jokin
- * ½âÎö¶ÁÈ¡»òÕßĞ´Èëexcel±í¸ñÖĞµÄÊı¾İ
+ * è§£æè¯»å–æˆ–è€…å†™å…¥excelè¡¨æ ¼ä¸­çš„æ•°æ®
  *
  */
 public class ReadAndWriteExcelByJXL {
@@ -34,78 +34,77 @@ public class ReadAndWriteExcelByJXL {
 		
 	}
 	/**
-	 * Ä¿Ç°Ö»ÊµÏÖÁË¶ÁÈ¡µÚÒ»¸ösheet£¬ ÆäËüµÄ´ıÊµÏÖ
-	 * ´´½¨Ò»¸ö¾²Ì¬Àà·½·¨£¬ÊµÏÖ´Óexcel±í¸ñÖĞ¶ÁÈ¡Êı(¾²Ì¬Àà·½·¨Ö»ÄÜµ÷¸ÃÀàµÄ¾²Ì¬³ÉÔ±±äÁ¿)
-	 * µ±µ¥Ôª¸ñÎª¿ÕÊ±£¬Ê¹ÓÃgetContents()»ñÈ¡µ½µÄ½á¹ûÊÇ""
+	 * ç›®å‰æ˜¯ç›´æ¥æŠŠæ•´ä¸ªexcelè¡¨æ ¼ä¸­çš„æ‰€æœ‰sheetä¸­çš„æ•°æ®éƒ½è¯»å–ç„¶åå°è£…åˆ°ä¸€ä¸ªé›†åˆé‡Œ
+	 * åˆ›å»ºä¸€ä¸ªé™æ€ç±»æ–¹æ³•ï¼Œå®ç°ä»excelè¡¨æ ¼ä¸­è¯»å–æ•°(é™æ€ç±»æ–¹æ³•åªèƒ½è°ƒè¯¥ç±»çš„é™æ€æˆå‘˜å˜é‡)
+	 * å½“å•å…ƒæ ¼ä¸ºç©ºæ—¶ï¼Œä½¿ç”¨getContents()è·å–åˆ°çš„ç»“æœæ˜¯""
+	 * @throws IOException 
+	 * @throws BiffException 
 	 */
-	public static List<ActionTestData> getData(File dataExcel) {
+	public static List<ActionTestData> getData(File dataExcel) throws BiffException, IOException {
 		// TODO Auto-generated constructor stub
 		//File dataExcel = new File("g:\\data");
 		Sheet s =null;
 		String sheetName = null;
+		List<ActionTestData> appData=null;//ç”¨å®Œè¦å­˜æ”¾çš„æ•°æ®ä¸º å¯¹è±¡ï¼Œæ‰€ä»¥åˆ›å»ºä¸€ä¸ªliståˆ—è¡¨ss
 		Workbook  wb = null;
-		try {
 			wb =Workbook.getWorkbook(dataExcel);
-			s = wb.getSheet(0);//»ñÈ¡µÚÒ»¸ö±í¸ñ
-			//»ñÈ¡sheetµÄÃû×Ö
-			sheetName = s.getName();
-		} catch (BiffException | IndexOutOfBoundsException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//»ñÈ¡¸ÃexcelµÄµÚÒ»¸ö±í¸ñÖĞÊı¾İµÄĞĞÊı
-		int length = s.getRows();//getRowHeight(int)·½·¨µÄÊÇ»ñÈ¡ĞĞ¸ß£» ¶øgetRows()·½·¨ÊÇ»ñÈ¡ĞĞÊı
-		int realLength=0;
-		while(!s.getCell(0, realLength).getContents().equals("") && s. getCell(0, realLength).getContents()!= null ){//£¡A.equals(B)±íÊ¾²»ÏàµÈ
-			//Ê¹ÓÃwhileÈ¥É¸Ñ¡²»ÊÇ¿ÕµÄĞĞÁĞ ; ÒòÎªaddµÄÊıÁ¿ÊÇ¸ù¾İlenthµÄ£¬ËùÒÔÊµ¼ÊÉÏ»¹ÊÇÒªÏŞÖÆlengthÕâ¸öÖµ
-			
-			realLength++;//¿ÉÒÔÔÚ¼Ó¸öÅĞ¶Ï£¬ÈÃreal²»ÄÜ´óÓÚlength
-		}
-			//×¢ÒâÒªÔÚwhile µÄÓï¾äÖĞ     ¼ÓÈëÌø³öÑ­»·Ìõ¼ş ·ñÔòwhile ×ÔÉí¾Í»áÎŞÏŞÑ­»·ÁË
-			
-		
-		//ÓÃÍêÒª´æ·ÅµÄÊı¾İÎª ¶ÔÏó£¬ËùÒÔ´´½¨Ò»¸ölistÁĞ±í
-		List<ActionTestData> appData = new ArrayList<ActionTestData>();
-		ActionTestData actionTestData = null;//new TestData();
-		for(int i=1;i<realLength;i++){//´ÓµÚ¶şĞĞ¿ªÊ¼»ñÈ¡Êı¾İ£¬ÒòÎªµÚÒ»ĞĞÊÇ±êÌâ    ĞĞ  length
-			actionTestData = new ActionTestData();
-			actionTestData.setSheetName(sheetName);
-			for(int j=0;j<s.getColumns();j++){//getCell(int ,int) Á½¸ö²ÎÊıÊÇÇ°ÁĞ ºóĞĞ
-				//ËÆºõÖ»ÔÚ»ñÈ¡ĞĞµÄÊ±ºò¶àÓàÁËÔÚ»ñÈ¡ÁĞµÄÊ±ºò²¢Ã»ÓĞ¶àÓà
-					if(j==0){//¿ÉÒÔÓÃÄÇ¸ö switch(±í´ïÊ½){case ³£Á¿±í´ïÊ½1: }
-						actionTestData.setCaseNo(s.getCell(j, i).getContents());//½«µÚÒ»ÁĞµÄ²ÎÊı¸´ÖÆµ½dataÊı×éÀï
-					}else if(j==1){
-						/*String a =s.getCell(j, i).getContents();*/
-						actionTestData.setAction(s.getCell(j, i).getContents());
-					}else if(j==2){
-						actionTestData.setLocationStyle(s.getCell(j, i).getContents());
-					}else if(j==3){
-						actionTestData.setLocationValue(s.getCell(j, i).getContents());
-					}else if(j==4){
-						actionTestData.setActionValue((s.getCell(j, i).getContents()));
-					}else if(j==5){
-						actionTestData.setExpectationStyle(s.getCell(j, i).getContents());
-					}else if(j==6){
-						actionTestData.setExpectationLocationStyle(s.getCell(j, i).getContents());
-					}else if(j==7){
-						actionTestData.setExpectationLocationValue(s.getCell(j, i).getContents());
-					}else if(j==8){
-						actionTestData.setExpectation(s.getCell(j, i).getContents());
-					}
+			//è·å¾—æ”¹excelæ‰€æœ‰çš„sheet
+			Sheet[] sheets =wb.getSheets();
+			int sheetnumber= wb.getNumberOfSheets();
+			//for-eachæ–¹æ³•è·å–æ‰€æœ‰çš„sheetä¸­çš„æ•°æ®
+			for(Sheet  sheetObj:sheets ){
+				
+				sheetName = sheetObj.getName();
+				//è·å–è¯¥excelçš„ç¬¬ä¸€ä¸ªè¡¨æ ¼ä¸­æ•°æ®çš„è¡Œæ•°
+				int length = s.getRows();//getRowHeight(int)æ–¹æ³•çš„æ˜¯è·å–è¡Œé«˜ï¼› è€ŒgetRows()æ–¹æ³•æ˜¯è·å–è¡Œæ•°
+				int realLength=0;
+				while(!s.getCell(0, realLength).getContents().equals("") && s. getCell(0, realLength).getContents()!= null ){//ï¼A.equals(B)è¡¨ç¤ºä¸ç›¸ç­‰
+					//ä½¿ç”¨whileå»ç­›é€‰ä¸æ˜¯ç©ºçš„è¡Œåˆ— ; å› ä¸ºaddçš„æ•°é‡æ˜¯æ ¹æ®lenthçš„ï¼Œæ‰€ä»¥å®é™…ä¸Šè¿˜æ˜¯è¦é™åˆ¶lengthè¿™ä¸ªå€¼
+					realLength++;//å¯ä»¥åœ¨åŠ ä¸ªåˆ¤æ–­ï¼Œè®©realä¸èƒ½å¤§äºlength
 				}
-			
-			appData.add(actionTestData);//Ã¿Ò»ĞĞĞÂÔöÒ»¸öTestDataÊı¾İ¶ÔÏó
-		}
+				//æ³¨æ„è¦åœ¨while çš„è¯­å¥ä¸­     åŠ å…¥è·³å‡ºå¾ªç¯æ¡ä»¶ å¦åˆ™while è‡ªèº«å°±ä¼šæ— é™å¾ªç¯äº†
+				appData = new ArrayList<ActionTestData>();
+				ActionTestData actionTestData = null;//new TestData();
+				for(int i=1;i<realLength;i++){
+					//ä»ç¬¬äºŒè¡Œå¼€å§‹è·å–æ•°æ®ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯æ ‡é¢˜    è¡Œ  length
+					actionTestData = new ActionTestData();
+					actionTestData.setSheetName(sheetName);
+					for(int j=0;j<s.getColumns();j++){//getCell(int ,int) ä¸¤ä¸ªå‚æ•°æ˜¯å‰åˆ— åè¡Œ
+						//ä¼¼ä¹åªåœ¨è·å–è¡Œçš„æ—¶å€™å¤šä½™äº†åœ¨è·å–åˆ—çš„æ—¶å€™å¹¶æ²¡æœ‰å¤šä½™
+							if(j==0){//å¯ä»¥ç”¨é‚£ä¸ª switch(è¡¨è¾¾å¼){case å¸¸é‡è¡¨è¾¾å¼1: }
+								actionTestData.setCaseNo(s.getCell(j, i).getContents());//å°†ç¬¬ä¸€åˆ—çš„å‚æ•°å¤åˆ¶åˆ°dataæ•°ç»„é‡Œ
+							}else if(j==1){
+								/*String a =s.getCell(j, i).getContents();*/
+								actionTestData.setAction(s.getCell(j, i).getContents());
+							}else if(j==2){
+								actionTestData.setLocationStyle(s.getCell(j, i).getContents());
+							}else if(j==3){
+								actionTestData.setLocationValue(s.getCell(j, i).getContents());
+							}else if(j==4){
+								actionTestData.setActionValue((s.getCell(j, i).getContents()));
+							}else if(j==5){
+								actionTestData.setExpectationStyle(s.getCell(j, i).getContents());
+							}else if(j==6){
+								actionTestData.setExpectationLocationStyle(s.getCell(j, i).getContents());
+							}else if(j==7){
+								actionTestData.setExpectationLocationValue(s.getCell(j, i).getContents());
+							}else if(j==8){
+								actionTestData.setExpectation(s.getCell(j, i).getContents());
+							}
+						}
+					
+					appData.add(actionTestData);//æ¯ä¸€è¡Œæ–°å¢ä¸€ä¸ªTestDataæ•°æ®å¯¹è±¡
+				}
+			}
 		if(wb!=null){
-			wb.close();//¶ÁÈ¡Íê£¬¹Ø±Õworkbook¹¤×÷²¾¶ÔÏó
+			wb.close();//è¯»å–å®Œï¼Œå…³é—­workbookå·¥ä½œç°¿å¯¹è±¡
 		}
 		
-			
 		return appData;
 
 	}
 	/**
-	 * ¸Õ·½·¨ÓÃÀ´½«²âÊÔ½á¹û´æ·Åµ½excel±í¸ñÀï£¬(ÔÚ½á¹û´íÎóµÄÊ±ºòÈÃ×ÖÌåÑÕÉ«±äºì»¹´ıÊµÏÖ)
+	 * åˆšæ–¹æ³•ç”¨æ¥å°†æµ‹è¯•ç»“æœå­˜æ”¾åˆ°excelè¡¨æ ¼é‡Œï¼Œ(åœ¨ç»“æœé”™è¯¯çš„æ—¶å€™è®©å­—ä½“é¢œè‰²å˜çº¢è¿˜å¾…å®ç°)
 	 * @param testResult
 	 * @throws IOException 
 	 */
@@ -114,33 +113,33 @@ public class ReadAndWriteExcelByJXL {
 		OutputStream os = null;
 		WritableWorkbook wwb = null;
 		
-		//ÉèÖÃÊ±¼ä¸ñÊ½
+		//è®¾ç½®æ—¶é—´æ ¼å¼
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd-ss");
-		//Éú³ÉÊ±¼ä´Á
+		//ç”Ÿæˆæ—¶é—´æˆ³
 		String dateString = formatter.format(new Date());
-		//»ñÈ¡µ½²âÊÔ½á¹ûµÄ×ÜÊı
+		//è·å–åˆ°æµ‹è¯•ç»“æœçš„æ€»æ•°
 		int lenghtOfResult = resultOfTest.size();
-		//Æ´½ÓÎÄ¼şÄ¿Â¼ Îª    \ÓÃ»§\testResultFileName20160612.xls µÄÎÄ¼şÂ·¾¶ĞÎÊ½
+		//æ‹¼æ¥æ–‡ä»¶ç›®å½• ä¸º    \ç”¨æˆ·\testResultFileName20160612.xls çš„æ–‡ä»¶è·¯å¾„å½¢å¼
 		File testResultFile = new File(System.getProperty("user.dir")+"\\"+testResultFileName + dateString + ".xls");
 		if (testResultFile !=null && testResultFile.exists()){
-			//¶¨ÒåÒ»¸öÊä³öÁ÷ ,»ñµÃ OSÁ÷¶ÔÏó£¬ Èç¹ûÖ»Êä³öµ½ÆÕÍ¨µÄTXTÎÄµµ£¬ Ö±½ÓÊ¹ÓÃOSÁ÷¶ÔÏó
+			//å®šä¹‰ä¸€ä¸ªè¾“å‡ºæµ ,è·å¾— OSæµå¯¹è±¡ï¼Œ å¦‚æœåªè¾“å‡ºåˆ°æ™®é€šçš„TXTæ–‡æ¡£ï¼Œ ç›´æ¥ä½¿ç”¨OSæµå¯¹è±¡
 			os = new FileOutputStream(testResultFile);
-			/*os.write("Êä³öÄÚÈİ".getBytes());*/
-			 //³õÊ¼»¯Ò»¸ö¿ÉĞ´µÄWorkbook¶ÔÏó
+			/*os.write("è¾“å‡ºå†…å®¹".getBytes());*/
+			 //åˆå§‹åŒ–ä¸€ä¸ªå¯å†™çš„Workbookå¯¹è±¡
 			/*wwb = Workbook.createWorkbook(testResultFile);*/	
 		}else if(!testResultFile.exists()){
-			//µ±ÎÄ¼ş²»´æÔÚÊ±£¬ÏÈ´´½¨¸ÃÎÄ¼ş
+			//å½“æ–‡ä»¶ä¸å­˜åœ¨æ—¶ï¼Œå…ˆåˆ›å»ºè¯¥æ–‡ä»¶
 			testResultFile.createNewFile();
 			os = new FileOutputStream(testResultFile);
-			//¿ÉĞ´¹¤×÷²¾µÄ¹¹Ôì·½Ê½ÓĞ¼¸¸ö£¬ ¿ÉÒÔ³¢ÊÔÊ¹ÓÃ²ÎÊıÎªFile¸ñÊ½µÄÊÔÊÔ
+			//å¯å†™å·¥ä½œç°¿çš„æ„é€ æ–¹å¼æœ‰å‡ ä¸ªï¼Œ å¯ä»¥å°è¯•ä½¿ç”¨å‚æ•°ä¸ºFileæ ¼å¼çš„è¯•è¯•
 		}
 		wwb = Workbook.createWorkbook(os);
-		//´´½¨µÚÒ»¿ÉĞ´µÄsheet¼´ WritableSheet
-		WritableSheet wsheet = wwb.createSheet("testResult", 0);//µÚÒ»¸ö²ÎÊıÊÇsheetÃû£¬µÚ¶ş¸ö²ÎÊıÊÇ ±íÊ¾¸Ã¹¤×÷Ò³ÔÚexcelÖĞ´¦ÓÚÄÄÒ»Ò³
+		//åˆ›å»ºç¬¬ä¸€å¯å†™çš„sheetå³ WritableSheet
+		WritableSheet wsheet = wwb.createSheet("testResult", 0);//ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯sheetåï¼Œç¬¬äºŒä¸ªå‚æ•°æ˜¯ è¡¨ç¤ºè¯¥å·¥ä½œé¡µåœ¨excelä¸­å¤„äºå“ªä¸€é¡µ
 		for(int i=0;i<lenghtOfResult;i++){
 			ResultOfTest rot = resultOfTest.get(i);
-			//´´½¨ÎÄ±¾Ààµ¥Ôª¸ñ
-			Label sheetNameColumn = new Label(0, i, rot.getSheetName());//µÚÒ»¸ö²ÎÊı±íÊ¾ÁĞ£¬ µÚ¶ş¸ö±íÊ¾ĞĞ£¬µÚÈı¸öÊÇcellµÄÄÚÈİ
+			//åˆ›å»ºæ–‡æœ¬ç±»å•å…ƒæ ¼
+			Label sheetNameColumn = new Label(0, i, rot.getSheetName());//ç¬¬ä¸€ä¸ªå‚æ•°è¡¨ç¤ºåˆ—ï¼Œ ç¬¬äºŒä¸ªè¡¨ç¤ºè¡Œï¼Œç¬¬ä¸‰ä¸ªæ˜¯cellçš„å†…å®¹
 			Label caseNoColumn = new Label(1, i, rot.getCaseNo());
 			Label resultColumn = new Label(2, i, rot.getResult());
 			
@@ -151,7 +150,7 @@ public class ReadAndWriteExcelByJXL {
 			} catch (WriteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("²âÊÔ½á¹ûĞ´Èëµ½excel±í¸ñÊ±³öÏÖÒì³£");
+				System.out.println("æµ‹è¯•ç»“æœå†™å…¥åˆ°excelè¡¨æ ¼æ—¶å‡ºç°å¼‚å¸¸");
 			}
 		}
 	}

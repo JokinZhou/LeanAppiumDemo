@@ -28,54 +28,55 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  *
  */
 @RunWith(BlockJUnit4ClassRunner.class)
-public class Test1 extends TestCase {
+public class Test1 extends TestCase {//ç»§æ‰¿TestCase æ˜¯ä¸ºäº†èƒ½ä½¿ç”¨å“ªäº›åˆ¤å®šç±»
 
   private AppiumDriver driver;
 
   @Before
   public void start() throws MalformedURLException {
-    // Ê¹ÓÃphonegap´ò°üµÄhybrid appÂ·¾¶
+    // Ê¹ï¿½ï¿½phonegapï¿½ï¿½ï¿½ï¿½ï¿½hybrid appÂ·ï¿½ï¿½
     String apppath = "D:\\Work\\codes\\hands\\hands-hello-phonegap\\platforms\\android\\bin\\HelloWorld.apk";
 
-    // ³õÊ¼»¯AppniumDriver
+    // ï¿½ï¿½Ê¼ï¿½ï¿½AppniumDriver
     DesiredCapabilities capabilities = new DesiredCapabilities();
-    capabilities.setCapability("app", apppath);// ±»²âapp apk°üµÄÎ»ÖÃ(µ±²»ĞèÒª°²×°±»²â³ÌĞòÊ±£¬´Ë¾äÆÁ±Î)
-    
-    capabilities.setCapability("deviceName", "NX403A");// Õæ»ú²âÊÔandroidÉè±¸
-    capabilities.setCapability("platformVersion", "4.2.2");// Õæ»úandroid°æ±¾Îª4.2.2
-    capabilities.setCapability("platformName", "Android");// Õæ»úÎªandroidÏµÍ³  
-    capabilities.setCapability("appPackage", "com.example.hello");// ±»²âappµÄActivityÀàËùÔÚ°ü
-    capabilities.setCapability("appActivity", ".HelloWorld");// ±»²âappµÄActivityÀà
-    capabilities.setCapability("automationName", "selendroid");// ÒòÎªÕæ»úÎª4.2°æ±¾£¬ËùÒÔÊ¹ÓÃselendroid
+    //if no need install don't add this
+    capabilities.setCapability("app", apppath);// ï¿½ï¿½ï¿½ï¿½app apkï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ë¾ï¿½ï¿½ï¿½ï¿½ï¿½)
+    //tongyong ,wulushifou anzhuang dou yao peizhi
+    capabilities.setCapability("deviceName", "NX403A");// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½androidï¿½è±¸
+    capabilities.setCapability("platformVersion", "4.2.2");// ï¿½ï¿½ï¿½androidï¿½æ±¾Îª4.2.2
+    capabilities.setCapability("platformName", "Android");// ï¿½ï¿½ï¿½ÎªandroidÏµÍ³  
+    capabilities.setCapability("appPackage", "com.example.hello");// ï¿½ï¿½ï¿½ï¿½appï¿½ï¿½Activityï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½
+    capabilities.setCapability("appActivity", ".HelloWorld");// ï¿½ï¿½ï¿½ï¿½appï¿½ï¿½Activityï¿½ï¿½
+    capabilities.setCapability("automationName", "selendroid");// ï¿½ï¿½Îªï¿½ï¿½ï¿½Îª4.2ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½selendroid
 
-    // http://127.0.0.1:4723/wd/hubµØÖ·¾ÍÊÇAppiumServerµÄµØÖ·
-    driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),//AppiumDriver±»±ä³É³éÏóÀàÁËËùÒÔ²»ÄÜÖ±½ÓÊµÀı»¯
+    // http://127.0.0.1:4723/wd/hubï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½AppiumServerï¿½Äµï¿½Ö·
+    driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),//AppiumDriverï¿½ï¿½ï¿½ï¿½É³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
         capabilities);
   }
 
   @Test
   public void testtest() {
     try {
-      Set<String> contextNames = driver.getContextHandles();//µ÷ÓÃAPPiumÀàÖĞµÄgetContextHandles()·½·¨
+      Set<String> contextNames = driver.getContextHandles();//ï¿½ï¿½ï¿½ï¿½APPiumï¿½ï¿½ï¿½Ğµï¿½getContextHandles()ï¿½ï¿½ï¿½ï¿½
       for (String contextName : contextNames) {
-        System.out.println(contextName); // ÓÃÓÚ·µ»Ø±»²âappÊÇNATIVE_APP»¹ÊÇWEBVIEW£¬Èç¹ûÁ½Õß¶¼ÓĞ¾ÍÊÇ»ìºÏĞÍApp
+        System.out.println(contextName); // ï¿½ï¿½ï¿½Ú·ï¿½ï¿½Ø±ï¿½ï¿½ï¿½appï¿½ï¿½NATIVE_APPï¿½ï¿½ï¿½ï¿½WEBVIEWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½Ğ¾ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ï¿½App
       }
 
-      /*Thread.sleep(5000);// µÈËüÒ»»á  £¨¾¡Á¿²»ÒªÓÃÕâÖÖ·½·¨ÔİÍ£ÒòÎª¿ÉÄÜÔì³É½ø³ÌËÀµô£©
-*/      driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);// ÒşÊ½µÈ´ı£¬È«¾ÖµÈ´ı30s²»¹ÜÔªËØÊÇ·ñÒÑ¾­¼ÓÔØ
+      /*Thread.sleep(5000);// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*/      driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);// ï¿½ï¿½Ê½ï¿½È´ï¿½ï¿½ï¿½È«ï¿½ÖµÈ´ï¿½30sï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
 
-      driver.context("WEBVIEW_0");// ÈÃappiumÇĞ»»µ½webviewÄ£Ê½ÒÔ±ã²éÕÒwebÔªËØ
+      driver.context("WEBVIEW_0");// ï¿½ï¿½appiumï¿½Ğ»ï¿½ï¿½ï¿½webviewÄ£Ê½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½webÔªï¿½ï¿½
       WebElement text_baidusearch = driver.findElement(By.id("word"));
-      text_baidusearch.click();// µã»÷°Ù¶ÈµÄËÑË÷ÊäÈë¿ò£¨webÔªËØ£©
+      text_baidusearch.click();// ï¿½ï¿½ï¿½ï¿½Ù¶Èµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½webÔªï¿½Ø£ï¿½
       
       /*
-       * appium²»Ö§³ÖÖĞÎÄÊäÈë ²Î¿¼ÁËrobotiumµÄÒÔjs·½Ê½ÎªÔªËØÖ±½ÓÉèÖÃvalueµÄ×ö·¨
-       * ÀûÓÃSeleniumÖĞWebdriverÖ´ĞĞjs·½·¨ÊµÏÖÖĞÎÄÊäÈë
+       * appiumï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ï¿½ï¿½robotiumï¿½ï¿½ï¿½ï¿½jsï¿½ï¿½Ê½ÎªÔªï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½valueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+       * ï¿½ï¿½ï¿½ï¿½Seleniumï¿½ï¿½WebdriverÖ´ï¿½ï¿½jsï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
        */
       JavascriptExecutor jse = driver;
-      jse.executeScript("document.getElementById('word').value='ÊäÈë·¨'");
+      jse.executeScript("document.getElementById('word').value='ï¿½ï¿½ï¿½ë·¨'");
 
-      Thread.sleep(10000);// µÈÒ»»á¹Û²ìÏÂĞ§¹û
+      Thread.sleep(10000);// ï¿½ï¿½Ò»ï¿½ï¿½Û²ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
